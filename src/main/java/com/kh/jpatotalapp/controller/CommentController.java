@@ -14,7 +14,7 @@ import java.util.List;
 import static com.kh.jpatotalapp.utils.Common.CORS_ORIGIN;
 
 @Slf4j
-@CrossOrigin(origins = CORS_ORIGIN)
+//@CrossOrigin(origins = CORS_ORIGIN)
 @RestController
 @RequestMapping("/api/comment")
 @RequiredArgsConstructor
@@ -62,7 +62,7 @@ public class CommentController {
     }
 
     // 댓글 상세 조회
-    @GetMapping("/detial/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<CommentDto> commentDetail(@PathVariable Long id) {
         CommentDto commentDto = commentService.getCommentDetail(id);
         return ResponseEntity.ok(commentDto);

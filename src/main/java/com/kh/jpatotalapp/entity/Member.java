@@ -1,9 +1,7 @@
 package com.kh.jpatotalapp.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.kh.jpatotalapp.constant.Authority;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,6 +22,9 @@ public class Member {
     private String email;
     private String image;
     private LocalDateTime regDate;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
     @PrePersist
     public void prePersist() {
         regDate = LocalDateTime.now();
@@ -34,5 +35,18 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Board> boards;
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RefreshToken refreshToken;
+
+    @Builder // 빌더 패턴 적용
+    public Member(String name, String password, String email, String image, Authority authority) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.image = image;
+        this.authority = authority;
+        this.regDate = LocalDateTime.now();
+    }
 
 }
